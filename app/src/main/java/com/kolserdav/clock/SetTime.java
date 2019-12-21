@@ -3,6 +3,7 @@ package com.kolserdav.clock;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TimePicker;
@@ -13,9 +14,11 @@ public class SetTime extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_time);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         String oldHour = getIntent().getStringExtra("EXTRA_HOUR");
         String oldMinute = getIntent().getStringExtra("EXTRA_MINUTE");
         TimePicker timePicker = (TimePicker) findViewById(R.id.time_picker);
+        timePicker.setIs24HourView(true);
         if (oldHour != null) {
             timePicker.setHour(Integer.parseInt(oldHour));
         }

@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedHour;
     SharedPreferences sharedMinute;
     SharedPreferences sharedIsChecked;
+    SharedPreferences sharedIs24Hour;
     String defHour;
     String defMinute;
+    String defIs24Hour;
     String defIsChecked;
     String savedHour;
     String savedMinute;
@@ -64,13 +63,15 @@ public class MainActivity extends AppCompatActivity {
     public void checkBoxHandler(View v) {
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkClock);
         Boolean checkBoxIsChecked = checkBox.isChecked();
-        setCheckBoxValue(checkBoxIsChecked.toString());
+        String checkBoxIsCheckedStr = (checkBoxIsChecked)? "true" : "false";
+        setCheckBoxValue(checkBoxIsCheckedStr);
     }
 
     public MainActivity() {
         defHour = "07";
         defMinute = "00";
         defIsChecked = "false";
+        defIs24Hour = "false";
         if (serviceStarted == null) {
             serviceStarted = false;
         }
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setCheckBoxValue(String isChecked) {
+        Log.d("ischecked", isChecked);
         SharedPreferences.Editor checkBoxEditor = sharedIsChecked.edit();
         checkBoxEditor.putString(getString(R.string.is_checked), isChecked);
         checkBoxEditor.apply();
